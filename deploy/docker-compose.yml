@@ -1,0 +1,48 @@
+version: "3"
+
+networks:
+    task:
+
+services:
+    nginx:
+        image: 'nginx:alpine'
+        container_name: nginx
+        ports:
+            - "82:82"
+        volumes:
+            - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+            - ../:/var/www/html
+        depends_on:
+            - php
+            - mysql
+        networks:
+            - task
+
+    mysql:
+        platform: linux/amd64
+        container_name: mysql
+        image: mysql:5.7
+        restart: unless-stopped
+        ports:
+            - "43062:3306"
+        volumes:
+            - ./mysql:/var/lib/mysql
+        environment:
+            MYSQL_DATABASE: tasks
+            MYSQL_USER: super
+            MYSQL_PASSWORD: secret
+            MYSQL_ROOT_PASSWORD: secret
+        networks:
+            - task
+
+    php:
+        container_name: php
+        build:
+            context: .
+            dockerfile: Dockerfile
+        volumes:
+            - ../:/var/www/html
+        ports:
+            - "9055:9000"
+        networks:
+            - task
