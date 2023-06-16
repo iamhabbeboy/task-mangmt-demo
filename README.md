@@ -1,7 +1,11 @@
 ## Task Management Demo
 
-- Clone or unzip the project.
-- You can start the project either with Docker or the conventional laravel server 
+- Clone or unzip the project 
+- You can start the project either with Docker or the conventional laravel server
+
+### Installing packages
+Run `composer install` and `npm install` to install both laravel package and javascript related packages. 
+
 ### Docker Setup 
 Make sure docker is installed on your machine, then execute this command from the project directory.
 ```bash
